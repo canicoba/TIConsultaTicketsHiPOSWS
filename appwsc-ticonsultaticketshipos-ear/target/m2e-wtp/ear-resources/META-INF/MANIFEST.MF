@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Version: M=1.0.0,J=${bamboo_jira_version},B=${bamboo_pl
+ anKey}-${bamboo_buildNumber},T=${bamboo_buildTimeStamp}
+Build-Jdk: 1.6.0_35
+Built-By: T14948
+Created-By: Maven Integration for Eclipse
+
