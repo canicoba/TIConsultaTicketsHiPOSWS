@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- -->
+    <!-- Configuracion de beans -->
+    <!-- -->
+
+    <!-- Enable usage of @Autowired. -->
+    <context:annotation-config />
+
+    <!-- Component scan para que busque las clases anotadas para incluir en el contexto de spring -->
+    <context:component-scan base-package="com.inditex.ofda.appwscticonsultaticketshipos.exceptions" />
+
+    <bean id="tiConsultaTicketsHiposService" class="com.inditex.ofda.appwscticonsultaticketshipos.service.TiConsultaTicketsHiposService">
+        <property name="tiConsultaTicketsHiposManager" ref="tiConsultaTicketsHiposManager" />
+        <property name="version" value="${ticonsultaticketshipos.ws.version}" />
+    </bean>
+
+    <bean id="tiConsultaTicketsHiposManager" class="com.inditex.ofda.appwscticonsultaticketshipos.manager.impl.TiConsultaTicketsHiposManagerImpl">
+        <property name="tiConsultaticketsHiposDAO" ref="tiConsultaticketsHiposDAO" />
+    </bean>
+
+
+    <!--<bean id="tiConsultaticketsHiposDAO" class="com.inditex.ofda.appwscticonsultaticketshipos.dao.impl.TiConsultaTicketsHiposDAOImpl">
+    </bean>-->
+
+
+    <bean id="tiConsultaticketsHiposDAO"
+		class="com.inditex.ofda.appwscticonsultaticketshipos.dao.mock.TiConsultaTicketsHiposDAOMock">
+    </bean>
+
+    <!-- Configuracion a partir de parametros env-entry -->
+    <bean id="jndiPropertyPlaceholder" class="com.inditex.common.business.config.JndiPropertyPlaceholderConfigurer">
+        <property name="jndiOverride" value="true" />
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+    </bean>
+
+</beans>

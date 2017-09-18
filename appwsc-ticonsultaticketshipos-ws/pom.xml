@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.inditex.ofda.appwsc-ticonsultaticketshipos</groupId>
+		<artifactId>appwsc-ticonsultaticketshipos</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>appwsc-ticonsultaticketshipos-ws</artifactId>
+	<packaging>war</packaging>
+	
+	<name>${project.groupId}:${project.artifactId}</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.inditex.ofda.strlibco</groupId>
+			<artifactId>strlibco-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.inditex.ofda.strlibco</groupId>
+			<artifactId>strlibco-lib</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.oracle.coherence</groupId>
+			<artifactId>coherence</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-basics-runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jvnet.jaxb2_commons</groupId>
+			<artifactId>jaxb2-commons-lang</artifactId>
+		</dependency>
+		
+		<dependency> 
+    		<groupId>javax.ws.rs</groupId> 
+    		<artifactId>jsr311-api</artifactId> 
+		</dependency>
+
+		<dependency>
+    		<groupId>com.sun.jersey</groupId>
+    		<artifactId>jersey-server</artifactId>
+		</dependency>
+
+		<dependency>
+    		<groupId>com.sun.jersey</groupId>
+    		<artifactId>jersey-core</artifactId>
+		</dependency>
+		
+		<dependency>
+    		<groupId>com.sun.jersey</groupId>
+    		<artifactId>jersey-servlet</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-spring</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-server</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-servlet</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<!--Spring framework -->
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+        	<groupId>org.graylog2</groupId>
+        	<artifactId>gelfj</artifactId>
+        </dependency>
+        <dependency>
+        	<groupId>me.moocar</groupId>
+        	<artifactId>logback-gelf</artifactId>
+        </dependency>
+       	<dependency>
+        	<groupId>com.inditex.common</groupId>
+        	<artifactId>common-business-logging</artifactId>
+        </dependency>
+       	<dependency>
+        	<groupId>com.inditex.common</groupId>
+        	<artifactId>common-business-config</artifactId>
+        </dependency>
+        	
+		<!-- junit -->    
+		<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>           
+        </dependency>
+        
+        <!-- mockito -->    
+        <dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+        
+	</dependencies>
+
+	<build>
+			
+		<finalName>${contextRoot}</finalName>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/web.xml</include>
+								<include>**/weblogic.xml</include>
+							</includes>
+							<filtering>true</filtering>
+						</resource>
+						<resource>
+                			<directory>etc</directory>
+                			<filtering>true</filtering>
+                			<targetPath>../jetty</targetPath>
+                			<includes>
+                    			<include>jetty-env.xml</include>
+                			</includes>
+            			</resource>
+            			<resource>
+                			<directory>src/main/resources/spring</directory>
+                			<filtering>true</filtering>
+                			<targetPath>WEB-INF/classes/spring</targetPath>
+                			<includes>
+                    			<include>spring-model.xml</include>
+                			</includes>
+            			</resource>
+			            <resource>
+			                <directory>src/main/resources</directory>
+			                <filtering>true</filtering>
+			                <targetPath>WEB-INF/classes</targetPath>
+			                <includes>
+			                    <include>application.properties</include>
+			                </includes>
+			            </resource>
+            			<resource>
+                			<directory>src/main/resources</directory>
+                			<filtering>true</filtering>
+                			<targetPath>WEB-INF/classes</targetPath>
+                			<includes>
+                    			<include>logback.xml</include>
+                			</includes>
+            			</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- =========================================================== -->
+				<!-- Jetty configuration -->
+				<!-- =========================================================== -->
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.plugin.version}</version>
+				<configuration>
+					<stopPort>9966</stopPort>
+					<stopKey>foo</stopKey>
+					<webAppConfig>
+						<contextPath>/${contextRoot}</contextPath>
+						<jettyEnvXml>target/jetty/jetty-env.xml</jettyEnvXml>
+						<defaultsDescriptor>${pom.basedir}/etc/webdefault.xml</defaultsDescriptor>
+						<descriptor>${project.build.directory}/${project.build.finalName}/WEB-INF/web.xml</descriptor>						
+					</webAppConfig>
+					<jettyXml>${pom.basedir}/etc/jetty.xml</jettyXml>
+					<reload>manual</reload>
+					<loginServices>
+						<loginService implementation="org.eclipse.jetty.security.HashLoginService">
+							<name>ItxRealm</name>
+							<config>${pom.basedir}/etc/realm.properties</config>
+						</loginService>
+					</loginServices>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>javax.transaction</groupId>
+						<artifactId>jta</artifactId>
+						<version>${jta.version}</version>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>commons-dbcp</groupId>
+						<artifactId>commons-dbcp</artifactId>
+						<version>${commons.dbcp.version}</version>
+					</dependency>
+                    <dependency>
+                        <groupId>com.oracle.weblogic</groupId>
+                        <artifactId>ojdbc7</artifactId>
+                        <version>${ptr.version}</version>
+                    </dependency> 
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

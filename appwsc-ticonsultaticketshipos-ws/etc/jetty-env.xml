@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configure id="webapp" class="org.eclipse.jetty.webapp.WebAppContext">
+    
+<!--  copie del predatalake - habria q importar la dependencia --> 
+<!--     <Call name="getConfiguration" class="bitronix.tm.TransactionManagerServices"> -->
+<!--         <Set name="defaultTransactionTimeout">900</Set> -->
+<!--         <Set name="logPart1Filename">./target/work/btm1.tlog</Set> -->
+<!--         <Set name="logPart2Filename">./target/work/btm2.tlog</Set> -->
+<!--     </Call> -->
+    
+<!--     <New class="org.eclipse.jetty.plus.jndi.Resource"> -->
+<!--         <Arg>javax.transaction.TransactionManager</Arg> -->
+<!--         <Arg> -->
+<!--             <Call name="getTransactionManager" class="bitronix.tm.TransactionManagerServices" /> -->
+<!--         </Arg> -->
+<!--     </New> -->
+
+<!--     <New class="org.eclipse.jetty.plus.jndi.Transaction"> -->
+<!--         <Arg> -->
+<!--             <Call name="getTransactionManager" class="bitronix.tm.TransactionManagerServices" /> -->
+<!--         </Arg> -->
+<!--     </New> -->
+    
+	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+	    <Arg>urlBaseSSO</Arg>
+	    <Arg type="java.lang.String">http://axdeswas5.central.inditex.grp/ServiciosSSO</Arg>
+	    <Arg type="boolean">true</Arg>
+ 	 </New>
+
+  <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg>User.MemberShipAdmin</Arg>
+    <Arg type="java.lang.String"/>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+  <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg>Password.MemberShipAdmin</Arg>
+    <Arg type="java.lang.String"/>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+  <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg>applicationId</Arg>
+    <Arg type="java.lang.String">${applicationId}</Arg>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+  <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg>logPath</Arg>
+    <Arg type="java.lang.String">/appserv/data/logs/${applicationId}</Arg>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+  <New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+    <Arg>environment</Arg>
+    <Arg type="java.lang.String">des</Arg>
+    <Arg type="boolean">true</Arg>
+  </New>
+
+  
+  	<New class="org.eclipse.jetty.plus.jndi.EnvEntry">
+        <Arg>commonResourcesPath</Arg>
+        <Arg type="java.lang.String">http://axinweb.central.inditex.grp/aplicaciones/arquitectura/comunes</Arg>
+        <Arg type="java.lang.Boolean">true</Arg>
+    </New>
+
+    
+  <Set name="extractWAR">true</Set>
+
+</Configure>

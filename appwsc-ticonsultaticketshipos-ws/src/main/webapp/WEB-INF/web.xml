@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>TiConsultaTicketsHipos</display-name>
+  <description>REST Tienda Consulta Tickets Hipos</description>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+        	classpath:spring/spring-model.xml
+        </param-value>
+  </context-param>
+  
+  <listener>
+    <listener-class>
+      org.springframework.web.context.ContextLoaderListener
+    </listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>TiConsultaTicketsHiposService</servlet-name>
+    <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.inditex.ofda.appwscticonsultaticketshipos.service</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>TiConsultaTicketsHiposService</servlet-name>
+    <url-pattern>/service/*</url-pattern>
+  </servlet-mapping>
+  
+  <env-entry>
+    <env-entry-name>environment</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  <env-entry>
+    <env-entry-name>graylog.server</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  <env-entry>
+    <env-entry-name>graylog.port</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+  <env-entry>
+    <env-entry-name>graylog.environment</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+  </env-entry>
+</web-app>
