@@ -1,6 +1,7 @@
 
 package com.inditex.ofda.appwscticonsultaticketshipos.model.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -34,14 +35,16 @@ public class ConsultaTicketsHiposBatchRequestOSB {
     protected String fechaFin;
     
     /** The tipo operacion. */
+    @XmlElement(required = true)
     protected int tipoOperacion;
     
     /** The numero peticion. */
+    @XmlElement(required = true)
     protected int numeroPeticion;
     
     /** The tienda. */
-    @XmlElement(type = Long.class)
-    protected List<Long> tienda;
+    @XmlElement(required = true, type = Long.class)
+    protected List<Integer> tienda;
     
     /** The caja. */
     protected Integer caja;
@@ -64,7 +67,7 @@ public class ConsultaTicketsHiposBatchRequestOSB {
 	 * @param caja the caja
 	 */
 	public ConsultaTicketsHiposBatchRequestOSB(String fechaInicio, String fechaFin, int tipoOperacion,
-			int numeroPeticion, List<Long> tienda, Integer caja) {
+			int numeroPeticion, List<Integer> tienda, Integer caja) {
 		super();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -151,8 +154,11 @@ public class ConsultaTicketsHiposBatchRequestOSB {
 	 *
 	 * @return the tienda
 	 */
-	public List<Long> getTienda() {
-		return tienda;
+	public List<Integer> getTienda() {
+		if (tienda == null) {
+			tienda = new ArrayList<Integer>();
+        }
+        return tienda;
 	}
 	
 	/**
@@ -160,7 +166,7 @@ public class ConsultaTicketsHiposBatchRequestOSB {
 	 *
 	 * @param tienda the tienda to set
 	 */
-	public void setTienda(List<Long> tienda) {
+	public void setTienda(List<Integer> tienda) {
 		this.tienda = tienda;
 	}
 	

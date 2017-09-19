@@ -2,6 +2,7 @@ package com.inditex.ofda.appwscticonsultaticketshipos.model.dto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -25,22 +26,26 @@ public class ConsultaTicketsHiposBatchRequest {
 	
 	
     /** The fecha inicio. */
+	@XmlElement(required = true)
     protected String fechaInicio;
     
     /** The fecha fin. */
+	@XmlElement(required = true)
     protected String fechaFin;
     
     /** The tipo operacion. */
+	@XmlElement(required = true)
     protected Integer tipoOperacion;
     
     /** The numero peticion. */
+	@XmlElement(required = true)
     protected Integer numeroPeticion;
     
     /** The pais. */
     protected Integer pais;
     
     /** The tienda. */
-    protected Long tienda;
+    protected Integer tienda;
     
     /** The caja. */
     protected Integer caja;
@@ -68,7 +73,7 @@ public class ConsultaTicketsHiposBatchRequest {
 	 * @param cadena the cadena
 	 */
 	public ConsultaTicketsHiposBatchRequest(String fechaInicio, String fechaFin, Integer tipoOperacion,
-			Integer numeroPeticion, Integer pais, Long tienda, Integer caja, Integer cadena) {
+			Integer numeroPeticion, Integer pais, Integer tienda, Integer caja, Integer cadena) {
 		super();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -175,7 +180,7 @@ public class ConsultaTicketsHiposBatchRequest {
 	 *
 	 * @return the tienda
 	 */
-	public Long getTienda() {
+	public Integer getTienda() {
 		return tienda;
 	}
 
@@ -184,7 +189,7 @@ public class ConsultaTicketsHiposBatchRequest {
 	 *
 	 * @param tienda the tienda to set
 	 */
-	public void setTienda(Long tienda) {
+	public void setTienda(Integer tienda) {
 		this.tienda = tienda;
 	}
 

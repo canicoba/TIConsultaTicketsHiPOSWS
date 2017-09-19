@@ -33,6 +33,7 @@ public class ConsultaTicketsHiposOnlineRequest {
     protected String fechaFin;
     
     /** The tipo operacion. */
+    @XmlElement(required = true)
     protected Integer tipoOperacion;
     
     /** The pais. */
@@ -42,9 +43,11 @@ public class ConsultaTicketsHiposOnlineRequest {
     protected Long numeroOperacion;
     
     /** The tienda. */
-    protected Long tienda;
+    @XmlElement(required = true)
+    protected Integer tienda;
     
     /** The caja. */
+    @XmlElement(required = true)
     protected Integer caja;
     
 	/**
@@ -66,7 +69,7 @@ public class ConsultaTicketsHiposOnlineRequest {
 	 * @param caja the caja
 	 */
 	public ConsultaTicketsHiposOnlineRequest(String fechaInicio, String fechaFin, Integer tipoOperacion,
-			Integer pais, Long numeroOperacion, Long tienda, Integer caja) {
+			Integer pais, Long numeroOperacion, Integer tienda, Integer caja) {
 		super();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -172,7 +175,7 @@ public class ConsultaTicketsHiposOnlineRequest {
 	 *
 	 * @return the tienda
 	 */
-	public Long getTienda() {
+	public Integer getTienda() {
 		return tienda;
 	}
 
@@ -181,7 +184,7 @@ public class ConsultaTicketsHiposOnlineRequest {
 	 *
 	 * @param tienda the tienda to set
 	 */
-	public void setTienda(Long tienda) {
+	public void setTienda(Integer tienda) {
 		this.tienda = tienda;
 	}
 

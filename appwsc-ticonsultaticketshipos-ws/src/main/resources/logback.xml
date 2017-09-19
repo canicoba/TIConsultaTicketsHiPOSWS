@@ -2,14 +2,14 @@
 <configuration  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="logback.xsd">
     <if condition='p("ptr.env").equals("DES")'>
         <then>
-            <property name="LOG_DIR" value="/u01/app/des_oracle/product/wls12.1.3.0/logs/mw_ptr_wls_domain02/application/OFDASTCSTKDWSD/" />
+            <property name="LOG_DIR" value="/u01/app/des_oracle/product/wls12.1.3.0/logs/mw_ptr_wls_domain02/application/OFDATITCKHIWSC/" />
         </then>
         <else>
-            <property name="LOG_DIR" value="/u01/app/oracle/product/wls12.1.3.0/logs/mw_ptr_wls_domain02/application/OFDASTCSTKDWSD/" />
+            <property name="LOG_DIR" value="/u01/app/oracle/product/wls12.1.3.0/logs/mw_ptr_wls_domain02/application/OFDATITCKHIWSC/" />
         </else>
     </if>
 
-    <property name="ARCHIVE" value="OFDAVTIMPADWSD" />
+    <property name="ARCHIVE" value="OFDATITCKHIWSC" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

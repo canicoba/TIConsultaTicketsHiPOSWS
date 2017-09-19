@@ -33,15 +33,18 @@ public class ConsultaTicketsHiposOnlineRequestOSB {
     protected String fechaFin;
     
     /** The tipo operacion. */
+    @XmlElement(required = true)
     protected int tipoOperacion;
     
     /** The numero operacion. */
     protected Long numeroOperacion;
     
     /** The tienda. */
-    protected long tienda;
+    @XmlElement(required = true)
+    protected int tienda;
     
     /** The caja. */
+    @XmlElement(required = true)
     protected int caja;
     
 	/**
@@ -62,7 +65,7 @@ public class ConsultaTicketsHiposOnlineRequestOSB {
 	 * @param caja the caja
 	 */
 	public ConsultaTicketsHiposOnlineRequestOSB(String fechaInicio, String fechaFin, int tipoOperacion,
-			Long numeroOperacion, long tienda, int caja) {
+			Long numeroOperacion, int tienda, int caja) {
 		super();
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -149,7 +152,7 @@ public class ConsultaTicketsHiposOnlineRequestOSB {
 	 *
 	 * @return the tienda
 	 */
-	public long getTienda() {
+	public int getTienda() {
 		return tienda;
 	}
 
@@ -158,7 +161,7 @@ public class ConsultaTicketsHiposOnlineRequestOSB {
 	 *
 	 * @param tienda the tienda to set
 	 */
-	public void setTienda(long tienda) {
+	public void setTienda(int tienda) {
 		this.tienda = tienda;
 	}
 

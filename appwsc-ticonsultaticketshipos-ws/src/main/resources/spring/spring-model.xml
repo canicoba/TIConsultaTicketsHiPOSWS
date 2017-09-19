@@ -22,17 +22,13 @@
         <property name="version" value="${ticonsultaticketshipos.ws.version}" />
     </bean>
 
-    <bean id="tiConsultaTicketsHiposManager" class="com.inditex.ofda.appwscticonsultaticketshipos.manager.impl.TiConsultaTicketsHiposManagerImpl">
-        <property name="tiConsultaticketsHiposDAO" ref="tiConsultaticketsHiposDAO" />
-    </bean>
-
-
-    <!--<bean id="tiConsultaticketsHiposDAO" class="com.inditex.ofda.appwscticonsultaticketshipos.dao.impl.TiConsultaTicketsHiposDAOImpl">
+    <!--<bean id="tiConsultaTicketsHiposManager" class="com.inditex.ofda.appwscticonsultaticketshipos.manager.impl.TiConsultaTicketsHiposManagerImpl"
+		p:tiConsultaTicketsHiposBatchServiceUrl="${tiConsultaTicketsHiposBatch.esb.url}"
+		p:tiConsultaTicketsHiposOnlineServiceUrl="${tiConsultaTicketsHiposOnline.esb.url}"
+		p:obtenerTiendasByPaisISOyCadenaServiceUrl="${obtenerTiendasByPaisISOyCadena.esb.url}">
     </bean>-->
-
-
-    <bean id="tiConsultaticketsHiposDAO"
-		class="com.inditex.ofda.appwscticonsultaticketshipos.dao.mock.TiConsultaTicketsHiposDAOMock">
+	
+	<bean id="tiConsultaTicketsHiposManager" class="com.inditex.ofda.appwscticonsultaticketshipos.manager.mock.TiConsultaTicketsHiposManagerMock">
     </bean>
 
     <!-- Configuracion a partir de parametros env-entry -->

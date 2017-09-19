@@ -1,27 +1,40 @@
 package com.inditex.ofda.appwscticonsultaticketshipos.manager.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
+import java.io.StringWriter;
 
-import com.inditex.ofda.appwscticonsultaticketshipos.dao.TiConsultaTicketsHiposDAO;
+import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inditex.ofda.appwscticonsultaticketshipos.exceptions.GeneralServiceException;
 import com.inditex.ofda.appwscticonsultaticketshipos.manager.TiConsultaTicketsHiposManager;
-import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.ConsultaTicketsHiposBatchRequest;
-import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.ConsultaTicketsHiposOnlineRequest;
+import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.ConsultaTicketsHiposBatchRequestOSB;
+import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.ConsultaTicketsHiposOnlineRequestOSB;
+import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.GetTiendasByPaisISOyCadenaRequest;
+import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.GetTiendasByPaisISOyCadenaResponse;
 import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.TicketHipos;
-import com.inditex.ofda.appwscticonsultaticketshipos.model.dto.ValidadorRequest;
-import com.inditex.ofda.appwscticonsultaticketshipos.utils.Constantes;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 /**
  * The Class TiConsultaTicketsHiposManagerImpl.
  */
 public class TiConsultaTicketsHiposManagerImpl implements TiConsultaTicketsHiposManager {
 
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(TiConsultaTicketsHiposManagerImpl.class);
 	
-	/** The ti consultatickets hipos dao. */
-	private TiConsultaTicketsHiposDAO tiConsultaticketsHiposDAO;
-
-	
+    private String tiConsultaTicketsHiposBatchServiceUrl;
+    
+    private String tiConsultaTicketsHiposOnlineServiceUrl;
+    
+    private String obtenerTiendasByPaisISOyCadenaServiceUrl;
+    
 	/**
 	 * Instantiates a new ti consulta tickets hipos manager impl.
 	 */
@@ -33,188 +46,130 @@ public class TiConsultaTicketsHiposManagerImpl implements TiConsultaTicketsHipos
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void tiConsultaTicketsHiposBatch(final ConsultaTicketsHiposBatchRequest request)
-			throws Exception {
+	public void tiConsultaTicketsHiposBatch(final ConsultaTicketsHiposBatchRequestOSB request)
+			throws GeneralServiceException {
+        Client client = Client.create();
 
-		this.tiConsultaticketsHiposDAO.tiConsultaTicketsHiposBatch(request);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public TicketHipos tiConsultaTicketsHiposOnline(final ConsultaTicketsHiposOnlineRequest request)
-			throws Exception{
-		return this.tiConsultaticketsHiposDAO.tiConsultaTicketsHiposOnline(request);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-    public ValidadorRequest validaRequestConsultaTicketsHiposBatch(final ConsultaTicketsHiposBatchRequest request) {
-
-		List<String> listaCodError = new ArrayList<String>();
-		List<String> listaDescError = new ArrayList<String>();
-		boolean valido = true;
-		
-		ValidadorRequest validadorRequest = new ValidadorRequest(true, null, null);
-		
-		if ((request.getFechaInicio() == null) || (request.getFechaInicio().isEmpty())) {
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_FECHA_INICIO_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_FECHA_INICIO_OBLIGATORIO);
-		}
-		
-		if (request.getFechaInicio() != null) {
-			if (!esValidaFormatoFecha(request.getFechaInicio())) {
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_FORMATO_FECHA_INICIO_INCORRECTO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_FORMATO_FECHA_INICIO_INCORRECTO);
-			}
-		}
-		
-		if ((request.getFechaFin() == null) || (request.getFechaFin().isEmpty())) {
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_FECHA_FIN_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_FECHA_FIN_OBLIGATORIO);
-		}
-		
-		if (request.getFechaFin() != null) {
-			if (!esValidaFormatoFecha(request.getFechaFin())) {
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_FORMATO_FECHA_FIN_INCORRECTO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_FORMATO_FECHA_FIN_INCORRECTO);
-			}
-		}
-		
-		if (request.getTipoOperacion() == null){
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_TIPO_OPERACION_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_TIPO_OPERACION_OBLIGATORIO);
-		}
-		
-		if (request.getNumeroPeticion() == null){
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_NUMERO_PETICION_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_NUMERO_PETICION_OBLIGATORIO);
-		}
-		
-		if (request.getTienda() == null){
-			if (request.getPais() == null){
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_PAIS_OBLIGATORIO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_PAIS_OBLIGATORIO);
-			}
-		}
-		
-		validadorRequest.setEsValido(valido);
-		validadorRequest.setCodigoError(listaCodError);
-		validadorRequest.setDescripcionError(listaDescError);
-		return validadorRequest;
-    }
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-    public ValidadorRequest validaRequestConsultaTicketsHiposOnline(final ConsultaTicketsHiposOnlineRequest request) {
-		
-		List<String> listaCodError = new ArrayList<String>();
-		List<String> listaDescError = new ArrayList<String>();
-		boolean valido = true;
-
-        ValidadorRequest validadorRequest = new ValidadorRequest(true, null, null);
-        
-		if ((request.getFechaInicio() == null) || (request.getFechaInicio().isEmpty())) {
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_FECHA_INICIO_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_FECHA_INICIO_OBLIGATORIO);
-		}
-		
-		if (request.getFechaInicio() != null) {
-			if (!esValidaFormatoFecha(request.getFechaInicio())) {
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_FORMATO_FECHA_INICIO_INCORRECTO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_FORMATO_FECHA_INICIO_INCORRECTO);
-			}
-		}
-		
-		if ((request.getFechaFin() == null) || (request.getFechaFin().isEmpty())) {
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_FECHA_FIN_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_FECHA_FIN_OBLIGATORIO);
-		}
-		
-		if (request.getFechaFin() != null) {
-			if (!esValidaFormatoFecha(request.getFechaFin())) {
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_FORMATO_FECHA_FIN_INCORRECTO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_FORMATO_FECHA_FIN_INCORRECTO);
-			}
-		}
-		
-		if (request.getTipoOperacion() == null){
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_TIPO_OPERACION_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_TIPO_OPERACION_OBLIGATORIO);
-		}
-		
-		if (request.getTipoOperacion().compareTo(new Integer(Constantes.TIPO_DOCUMENTO_HIPOS)) == 0){
-			if (request.getNumeroOperacion() == null){
-				valido = false;
-				listaCodError.add(Constantes.CODIGO_ERROR_TIPO_OPERACION_OBLIGATORIO);
-				listaDescError.add(Constantes.DESCRIPCION_ERROR_TIPO_OPERACION_OBLIGATORIO);
-			}
-		}
-		
-		if (request.getTienda() == null){
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_TIENDA_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_TIENDA_OBLIGATORIO);
-		}
-		
-		if (request.getCaja() == null){
-			valido = false;
-			listaCodError.add(Constantes.CODIGO_ERROR_CAJA_OBLIGATORIO);
-			listaDescError.add(Constantes.DESCRIPCION_ERROR_CAJA_OBLIGATORIO);
-		}
-
-		validadorRequest.setEsValido(valido);
-		validadorRequest.setCodigoError(listaCodError);
-		validadorRequest.setDescripcionError(listaDescError);
-		return validadorRequest;
-    }
-	
-	
-    private boolean esValidaFormatoFecha(final String date) {
-
-        final SimpleDateFormat format = new SimpleDateFormat(Constantes.FORMATO_FECHA);
-        format.setLenient(false);
-
+        WebResource webResource = client
+                .resource(tiConsultaTicketsHiposBatchServiceUrl);
+        ObjectMapper mapper = new ObjectMapper();
+        String input = null;
         try {
-            format.parse(date);
-            return true;
+            input= mapper.writeValueAsString(request);
+            LOGGER.info(new StringBuffer("Se va a efectuar la llamada POST al servicio de url ")
+                    .append(tiConsultaTicketsHiposBatchServiceUrl).toString());
+            LOGGER.info(new StringBuffer("La entrada del servicio es ").append(input).toString());
+            ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON_TYPE)
+                    .post(ClientResponse.class, input);
+
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+
+        } catch (Exception e) {
+            StringBuffer mensajeError = new StringBuffer();
+            mensajeError.append("Error en : ").append(this.getClass().getName()).append(", ").append(e.getMessage());
+            LOGGER.error(String.format("%s", mensajeError));
+            throw new GeneralServiceException(this.getClass().getName(), "tiConsultaTicketsHiposBatch", e);
         }
-        catch (final Exception e) {
-            return false;
-        }
-
-    }
-
-
+		
+	}
+	
 	/**
-	 * @return the tiConsultaticketsHiposDAO
+	 * {@inheritDoc}
 	 */
-	public TiConsultaTicketsHiposDAO getTiConsultaticketsHiposDAO() {
-		return tiConsultaticketsHiposDAO;
+	@Override
+	public TicketHipos tiConsultaTicketsHiposOnline(final ConsultaTicketsHiposOnlineRequestOSB request)
+			throws GeneralServiceException{
+		TicketHipos response=null;
+        Client client = Client.create();
+
+        WebResource webResource = client
+                .resource(tiConsultaTicketsHiposOnlineServiceUrl);
+        ObjectMapper mapper = new ObjectMapper();
+        String input = null;
+        try {
+            input= mapper.writeValueAsString(request);
+            LOGGER.info(new StringBuffer("Se va a efectuar la llamada POST al servicio de url ")
+                    .append(tiConsultaTicketsHiposOnlineServiceUrl).toString());
+            LOGGER.info(new StringBuffer("La entrada del servicio es ").append(input).toString());
+            ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON_TYPE)
+                    .post(ClientResponse.class, input);
+
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+
+            String responseStr = writer.toString();
+            response = mapper.readValue(responseStr, TicketHipos.class);
+
+            LOGGER.info(new StringBuffer("La salida del servicio es ").append(responseStr).toString());
+        } catch (Exception e) {
+            StringBuffer mensajeError = new StringBuffer();
+            mensajeError.append("Error en : ").append(this.getClass().getName()).append(", ").append(e.getMessage());
+            LOGGER.error(String.format("%s", mensajeError));
+            throw new GeneralServiceException(this.getClass().getName(), "tiConsultaTicketsHiposOnline", e);
+        }
+        return response;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GetTiendasByPaisISOyCadenaResponse obtenerTiendasByPaisISOyCadena(final GetTiendasByPaisISOyCadenaRequest request)
+			throws GeneralServiceException{
+		GetTiendasByPaisISOyCadenaResponse response=null;
+        Client client = Client.create();
+
+        WebResource webResource = client
+                .resource(obtenerTiendasByPaisISOyCadenaServiceUrl);
+        ObjectMapper mapper = new ObjectMapper();
+        String input = null;
+        try {
+            input= mapper.writeValueAsString(request);
+            LOGGER.info(new StringBuffer("Se va a efectuar la llamada POST al servicio de url ")
+                    .append(obtenerTiendasByPaisISOyCadenaServiceUrl).toString());
+            LOGGER.info(new StringBuffer("La entrada del servicio es ").append(input).toString());
+            ClientResponse clientResponse = webResource.type(MediaType.APPLICATION_JSON_TYPE)
+                    .post(ClientResponse.class, input);
+
+            InputStream inputStream = clientResponse.getEntityInputStream();
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+
+            String responseStr = writer.toString();
+            response = mapper.readValue(responseStr, GetTiendasByPaisISOyCadenaResponse.class);
+
+            LOGGER.info(new StringBuffer("La salida del servicio es ").append(responseStr).toString());
+        } catch (Exception e) {
+            StringBuffer mensajeError = new StringBuffer();
+            mensajeError.append("Error en : ").append(this.getClass().getName()).append(", ").append(e.getMessage());
+            LOGGER.error(String.format("%s", mensajeError));
+            throw new GeneralServiceException(this.getClass().getName(), "obtenerTiendasByPaisISOyCadena", e);
+        }
+        return response;
 	}
 
 	/**
-	 * @param tiConsultaticketsHiposDAO the tiConsultaticketsHiposDAO to set
+	 * @param tiConsultaTicketsHiposBatchServiceUrl the tiConsultaTicketsHiposBatchServiceUrl to set
 	 */
-	public void setTiConsultaticketsHiposDAO(TiConsultaTicketsHiposDAO tiConsultaticketsHiposDAO) {
-		this.tiConsultaticketsHiposDAO = tiConsultaticketsHiposDAO;
+	public void setTiConsultaTicketsHiposBatchServiceUrl(String tiConsultaTicketsHiposBatchServiceUrl) {
+		this.tiConsultaTicketsHiposBatchServiceUrl = tiConsultaTicketsHiposBatchServiceUrl;
 	}
+	/**
+	 * @param tiConsultaTicketsHiposOnlineServiceUrl the tiConsultaTicketsHiposOnlineServiceUrl to set
+	 */
+	public void setTiConsultaTicketsHiposOnlineServiceUrl(String tiConsultaTicketsHiposOnlineServiceUrl) {
+		this.tiConsultaTicketsHiposOnlineServiceUrl = tiConsultaTicketsHiposOnlineServiceUrl;
+	}
+
+	/**
+	 * @param obtenerTiendasByPaisISOyCadenaServiceUrl the obtenerTiendasByPaisISOyCadenaServiceUrl to set
+	 */
+	public void setObtenerTiendasByPaisISOyCadenaServiceUrl(String obtenerTiendasByPaisISOyCadenaServiceUrl) {
+		this.obtenerTiendasByPaisISOyCadenaServiceUrl = obtenerTiendasByPaisISOyCadenaServiceUrl;
+	}
+
 
 }
